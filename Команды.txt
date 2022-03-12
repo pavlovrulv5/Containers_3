@@ -1,0 +1,64 @@
+Use command : sudo apt-get install -y conntrack
+then following by: sudo -E minikube start --driver=none
+it worked for me :)
+----
+minikube status
+----
+minikube start
+----
+kubectl get node
+
+NAME       STATUS   ROLES                  AGE   VERSION
+minikube   Ready    control-plane,master   44h   v1.23.3
+
+----
+
+kubectl cluster-info dump
+----
+kubectl cluster-info
+
+Kubernetes control plane is running at https://192.168.49.2:8443
+CoreDNS is running at https://192.168.49.2:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+----
+
+kubectl create ns kubedoom
+----
+
+kubectl config set-context --current --namespace=kubedoom
+----
+
+vi kubedoom.yaml
+----
+kubectl apply -f kubedoom.yaml
+
+serviceaccount/kubedoom created
+clusterrolebinding.rbac.authorization.k8s.io/kubedoom created
+deployment.apps/kubedoom-deployment created
+
+----
+kubectl get po
+
+NAME                                   READY   STATUS    RESTARTS   AGE
+kubedoom-5dc57468dc-p4pwp              0/1     Pending   0          28s
+kubedoom-deployment-849b447fbd-mk49x   1/1     Running   0          3m55s
+
+----
+
+kubectl port-forward pod/kubedoom-deployment-849b447fbd-mk49x 5901:5900
+
+Forwarding from 127.0.0.1:5901 -> 5900
+Forwarding from [::1]:5901 -> 5900
+
+----
+
+Скачиваем VNC Viewer 
+подключаемся по адресу 127.0.0.1:5901
+пароль idbehold
+
+------
+
+
+
+
+
